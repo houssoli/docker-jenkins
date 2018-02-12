@@ -76,10 +76,11 @@ RUN wget --quiet https://download.run.pivotal.io/new-relic/new-relic-${NEWRELIC_
 
 COPY newrelic.yml /opt/newrelic/
 
-USER jenkins
-
 # Install plugins
 COPY plugins.txt /usr/local/etc/plugins.txt
 RUN /usr/local/bin/plugins.sh /usr/local/etc/plugins.txt
+
+# Switch to the jenkins user
+USER jenkins
 
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
